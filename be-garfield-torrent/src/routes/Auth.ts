@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import passport from '../services/auth/passport-config';
+import passport from '../passport-config';
 
 const router = express.Router();
 
