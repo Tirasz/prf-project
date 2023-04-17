@@ -1,19 +1,15 @@
 import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import { environment } from './environment';
-import { UserRoutes } from './routes/User';
-
+import routes from './routes'
 
 const app = express();
 
-mongoose.connect(environment.CONNECTION_STRING);
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.once('open', function () {
-  console.log('Connected to MongoDB successfully!');
-});
+mongoose.connect(environment.CONNECTION_STRING, {})
+  .then(() => console.log('MongoDB connected'))
+  .catch((error) => console.log(`MongoDB connection error: ${error}`));
 
-app.use('/users', new UserRoutes().router);
+app.use(routes);
 
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000')
