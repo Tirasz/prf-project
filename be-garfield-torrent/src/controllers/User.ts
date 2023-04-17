@@ -1,10 +1,14 @@
 import { Request, Response } from 'express';
-import User, { UserModel } from '../models/User'
+import User, { bootstrapUsers } from '../models/User'
 import { Controller } from './Controller';
 
 export class UserController implements Controller {
 
-  async create(req: Request, res: Response) {
+  constructor() {
+    bootstrapUsers();
+  }
+
+  create(req: Request, res: Response) {
     const newUser = new User(req.body);
     newUser.save()
       .then(user => res.status(200).json(user))
@@ -23,7 +27,7 @@ export class UserController implements Controller {
       })
   }
 
-  async getById(req: Request, res: Response) {
+  getById(req: Request, res: Response) {
     const userId = req.params.userId;
     User.findById(userId)
       .then(user => {
@@ -39,7 +43,7 @@ export class UserController implements Controller {
       });
   }
 
-  async update(req: Request, res: Response) {
+  update(req: Request, res: Response) {
     const userId = req.params.id;
     User.findByIdAndUpdate(userId, req.body)
       .then(updatedUser => {
@@ -55,7 +59,7 @@ export class UserController implements Controller {
       });
   }
 
-  async delete(req: Request, res: Response) {
+  delete(req: Request, res: Response) {
     const userId = req.params.id;
     User.findByIdAndDelete(userId)
       .then(deletedUser => {
