@@ -2,8 +2,10 @@
   "name": "garfield-torrent",
   "version": "1.0.0",
   "description": "Just your old, regular, legal torrent sharing site",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "setup": "npm install && cd ./fe-garfield-torrent && npm install",
+    "serve": "cd ./fe-garfield-torrent && ng s",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -17,8 +19,12 @@
   },
   "homepage": "https://github.com/Tirasz/prf-project#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.6",
     "express": "^4.18.2",
+    "express-session": "^1.17.3",
     "mongodb": "^5.2.0",
-    "mongoose": "^7.0.3"
+    "mongoose": "^7.0.3",
+    "passport": "^0.6.0",
+    "passport-local": "^1.0.0"
   }
 }
