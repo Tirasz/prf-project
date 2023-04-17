@@ -3,7 +3,7 @@ import { Document, Schema, Model, model } from "mongoose";
 import bcrypt from "bcrypt";
 
 
-export interface UserModel extends Document {
+export interface IUser extends Document {
   _id?: ObjectId,
   email: string,
   username: string,
@@ -12,7 +12,13 @@ export interface UserModel extends Document {
   accessLevel: number
 };
 
-export const UserSchema: Schema<UserModel> = new Schema({
+interface IUserMethods {
+  comparePasswords(pwd: string): Promise<Boolean>;
+}
+
+type UserModel = Model<IUser, {}, IUserMethods>;
+
+export const UserSchema: Schema<IUser, UserModel, IUserMethods> = new Schema({
   email: { type: String, required: true, unique: true },
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
@@ -20,7 +26,7 @@ export const UserSchema: Schema<UserModel> = new Schema({
   memberSince: { type: Date },
 });
 
-UserSchema.pre('save', function (this: UserModel, next: any) {
+UserSchema.pre('save', function (this: IUser, next: any) {
   const user = this;
   // Hashing password
   if (user.isModified('password')) {
@@ -39,13 +45,13 @@ UserSchema.pre('save', function (this: UserModel, next: any) {
   }
 })
 
-UserSchema.methods.comparePasswords = function (this: UserModel, password: string, next: any) {
-  bcrypt.compare(password, this.password, function (err, isMatch) {
-    next(err, isMatch);
-  });
-}
+UserSchema.method('comparePasswords',
+  function comparePasswords(pwd: string) {
+    return bcrypt.compare(pwd, this.password);
+  }
+)
 
-const User: Model<UserModel> = model<UserModel>('User', UserSchema);
+const User = model<IUser, UserModel>('User', UserSchema);
 
 function bootstrapAdmin() {
   User.findOne({ accessLevel: 3 })

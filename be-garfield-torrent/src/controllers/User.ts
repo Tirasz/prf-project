@@ -14,7 +14,7 @@ export class UserController implements Controller {
       .then(user => res.status(200).json(user))
       .catch(err => {
         console.error(err);
-        res.status(500).send('Internal server error');
+        res.status(500).send('[USER] Internal server error');
       })
   }
 
@@ -23,7 +23,7 @@ export class UserController implements Controller {
       .then(users => res.status(200).json(users))
       .catch(err => {
         console.error(err);
-        res.status(500).send('Internal server error');
+        res.status(500).send('[USER] Internal server error');
       })
   }
 
@@ -32,14 +32,14 @@ export class UserController implements Controller {
     User.findById(userId)
       .then(user => {
         if (!user) {
-          res.status(404).send('User not found');
+          res.status(404).send('[USER] User not found');
           return;
         }
         res.status(200).json(user);
       })
       .catch(err => {
         console.error(err);
-        res.status(500).send('Internal server error');
+        res.status(500).send('[USER] Internal server error');
       });
   }
 
@@ -48,14 +48,14 @@ export class UserController implements Controller {
     User.findByIdAndUpdate(userId, req.body)
       .then(updatedUser => {
         if (!updatedUser) {
-          res.status(404).send('User not found');
+          res.status(404).send('[USER] User not found');
           return;
         }
         res.status(200).json(updatedUser);
       })
       .catch(err => {
         console.error(err);
-        res.status(500).send('Internal server error');
+        res.status(500).send('[USER] Internal server error');
       });
   }
 
@@ -64,14 +64,14 @@ export class UserController implements Controller {
     User.findByIdAndDelete(userId)
       .then(deletedUser => {
         if (!deletedUser) {
-          res.status(404).send('User not found');
+          res.status(404).send('[USER] User not found');
           return;
         }
         res.status(204).send();
       })
       .catch(err => {
         console.error(err);
-        res.status(500).send('Internal server error');
+        res.status(500).send('[USER] Internal server error');
       });
   }
 
