@@ -2,7 +2,7 @@
   "name": "garfield-torrent",
   "version": "1.0.0",
   "description": "Just your old, regular, legal torrent sharing site",
-  "main": "app.js",
+  "main": "be-garfield-torrent/app.js",
   "scripts": {
     "setup": "npm install && cd ./fe-garfield-torrent && npm install",
     "serve": "cd ./fe-garfield-torrent && ng s",
