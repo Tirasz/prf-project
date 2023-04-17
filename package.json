@@ -1,0 +1,24 @@
+{
+  "name": "garfield-torrent",
+  "version": "1.0.0",
+  "description": "Just your old, regular, legal torrent sharing site",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tirasz/prf-project.git"
+  },
+  "author": "Rózsa Balázs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tirasz/prf-project/issues"
+  },
+  "homepage": "https://github.com/Tirasz/prf-project#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongodb": "^5.2.0",
+    "mongoose": "^7.0.3"
+  }
+}
