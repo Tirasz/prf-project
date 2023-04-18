@@ -25,8 +25,8 @@ router.route('/logout').post((req, res, next) => {
 });
 
 router.route('/status').get((req, res, next) => {
-  if (!req.isAuthenticated()) return res.status(200).send({ user: null });
-  return res.status(200).send({ user: req.user });
+  if (!req.isAuthenticated()) return res.status(200).send({});
+  return res.status(200).send(req.user);
 })
 
 export default router;

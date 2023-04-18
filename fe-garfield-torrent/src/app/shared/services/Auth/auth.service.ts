@@ -41,7 +41,7 @@ export class AuthService {
   refreshCurrentUser(): void {
     this.http.get<{ user: any }>(BASE_URL + '/status').pipe(
       map(result => {
-        if (result.user)
+        if (result)
           return fromResponseObject(result);
         return null;
       }),
