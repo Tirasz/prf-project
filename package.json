@@ -2,11 +2,13 @@
   "name": "garfield-torrent",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "be-garfield-torrent/src/app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "cd fe-garfield-torrent && ng build && cd ../be-garfield-torrent && npm run build",
-    "run": "cd ../be-garfield-torrent && npm run serve"
+    "build-be": "cd be-garfield-torrent && npm run build",
+    "build-fe": "cd fe-garfield-torrent && ng build",
+    "build": "npm run build-be && npm run build-fe",
+    "serve": "cd be-garfield-torrent && npm run serve"
   },
   "repository": {
     "type": "git",

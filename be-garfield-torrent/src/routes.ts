@@ -4,7 +4,7 @@ import authRoutes from './routes/AuthRoutes';
 
 const router = Router();
 
-router.use('/api/users', userRoutes);
-router.use('/api/auth', authRoutes);
+router.use('/users', userRoutes);
+router.use('/auth', authRoutes);
 
 export default router;
