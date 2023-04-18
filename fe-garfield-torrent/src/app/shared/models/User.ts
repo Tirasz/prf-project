@@ -24,11 +24,12 @@ function capitalizeFirstLetter(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function ResponseErrorToString(err: UserResponseError) {
+export function ResponseErrorToString(err: UserResponseError | string) {
   let errorMsg = "";
-  if (!err)
+  if (!err || (err as string).length) {
+    console.log(err)
     return "Something went wrong...";
-
+  }
   (err as UserValidationError).errors.forEach(err => {
     errorMsg += capitalizeFirstLetter(err.field) + ": " + capitalizeFirstLetter(err.message) + "\n";
   })
