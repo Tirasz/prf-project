@@ -78,7 +78,7 @@ export class UserController implements Controller {
           res.status(404).send('User not found');
           return;
         }
-        res.status(204).send();
+        res.status(204).send(deletedUser);
       })
       .catch(err => {
         res.status(500).send(err);
