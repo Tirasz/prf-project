@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc --project ./",
     "serve": "node ./dist/app.js",
-    "dev": "npx nodemon",
+    "dev": "npx nodemon ./src/app.ts --noAngular",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Rózsa Balázs",

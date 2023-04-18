@@ -9,6 +9,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
 const ANGULAR_DIST_PATH = '../fe-garfield-torrent/dist/fe-garfield-torrent/';
+const shouldServeAngular = !process.argv.includes('--noAngular');
 
 const app = express();
 
@@ -24,12 +25,15 @@ app.use(session({ secret: 'randomSecretForNow', resave: true, saveUninitialized:
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.static(ANGULAR_DIST_PATH))
-app.get(/^((?!\/api\/).)*$/, (req, res) => {
-  res.sendFile('index.html', { root: ANGULAR_DIST_PATH });
-});
-
+if (shouldServeAngular) {
+  console.log('Serving angular app')
+  app.use(express.static(ANGULAR_DIST_PATH))
+  app.get(/^((?!\/api\/).)*$/, (req, res) => {
+    res.sendFile('index.html', { root: ANGULAR_DIST_PATH });
+  });
+}
 app.use('/api', apiRoutes);
+
 
 
 app.listen(3000, () => {
