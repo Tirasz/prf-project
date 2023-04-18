@@ -1,5 +1,5 @@
-import { ObjectId } from 'mongodb';
-import { Document, Schema, Model, model } from "mongoose";
+import { FindOneAndUpdateOptions, ObjectId } from 'mongodb';
+import { Document, Schema, Model, model, UpdateQuery } from "mongoose";
 import uniqueValidator from "mongoose-unique-validator";
 import bcrypt from "bcrypt";
 import { validateEmail } from '../utils/validators';
@@ -28,8 +28,31 @@ export const UserSchema: Schema<IUser, UserModel, IUserMethods> = new Schema({
   memberSince: { type: Date },
 });
 
+UserSchema.pre('findOneAndUpdate', function (this: UpdateQuery<IUser>, next: any) {
+  const fieldsToUpdate = this.getUpdate();
+  if (fieldsToUpdate.password) {
+    bcrypt.genSalt(10, (err, salt) => {
+      if (err) {
+        return next(err);
+      }
+      bcrypt.hash(fieldsToUpdate.password, salt, (error, hash) => {
+        if (error) {
+          return next(error);
+        }
+        fieldsToUpdate.password = hash;
+        return next();
+      })
+    })
+  }
+});
+
 UserSchema.pre('save', function (this: IUser, next: any) {
   const user = this;
+
+  // Setting memberSince
+  if (!user.memberSince) {
+    user.memberSince = new Date();
+  }
 
   // Hashing password
   if (user.isModified('password')) {
@@ -47,10 +70,6 @@ UserSchema.pre('save', function (this: IUser, next: any) {
     })
   }
 
-  // Setting memberSince
-  if (!user.memberSince) {
-    user.memberSince = new Date();
-  }
 })
 
 UserSchema.method('comparePasswords',
