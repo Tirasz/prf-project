@@ -1,0 +1,23 @@
+<p>menu works!</p>
+<mat-nav-list>
+  <a *ngIf="currentUser" mat-list-item routerLink="/create-torrent" >
+      <mat-icon>create_new_folder</mat-icon>
+      <span>Create torrent</span>
+  </a>
+  <a *ngIf="!(currentUser)" mat-list-item routerLink="/login" (click)="close()">
+      <mat-icon>login</mat-icon>
+      <span>Login</span>
+  </a>
+  <a *ngIf="!(currentUser)" mat-list-item routerLink="/register" (click)="close()">
+      <mat-icon>app_registration</mat-icon>
+      <span>Register</span>
+  </a>
+  <a *ngIf="currentUser" mat-list-item routerLink="/login" (click)="close(true)">
+      <mat-icon>input</mat-icon>
+      <span>Logout</span>
+  </a>
+  <a mat-list-item routerLink="/browser" (click)="close()">
+      <mat-icon>grid_view</mat-icon>
+      <span>Browse torrents</span>
+  </a>
+</mat-nav-list>
