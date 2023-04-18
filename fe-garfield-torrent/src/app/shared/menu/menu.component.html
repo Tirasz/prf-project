@@ -15,6 +15,10 @@
       <mat-icon>input</mat-icon>
       <span>Logout</span>
   </a>
+  <a *ngIf="currentUser" mat-list-item routerLink="/edit-user" (click)="close(true)">
+    <mat-icon>account_circle</mat-icon>
+    <span>Profile</span>
+</a>
   <a mat-list-item routerLink="/browser" (click)="close()">
       <mat-icon>grid_view</mat-icon>
       <span>Browse torrents</span>

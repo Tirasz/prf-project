@@ -12,6 +12,7 @@
       <div>TORRENT APP</div>
       <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
         <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+          <li *ngIf="(currentUser | async)"><a routerLink="/edit-user">Profile</a></li>
           <li><a routerLink="/browser">Browse torrents</a></li>
           <li *ngIf="(currentUser | async)"><a routerLink="/create-torrent">Upload torrent</a></li>
           <li *ngIf="!(currentUser | async)"><a routerLink="/login" >Login</a></li>
