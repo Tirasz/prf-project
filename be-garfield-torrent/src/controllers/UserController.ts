@@ -12,17 +12,14 @@ export class UserController implements Controller {
   create(req: Request, res: Response) {
     const newUser = new User(req.body);
 
-    User.validate(newUser)
-      .then(() => {
-        newUser.save()
-          .then(user => res.status(200).json(user))
-          .catch(err => {
-            console.error(err);
-            res.status(500).send(err);
-          })
+    newUser.save()
+      .then(user => res.status(200).json(user))
+      .catch(err => {
+        if (err.name == "ValidationError")
+          res.status(400).send(err);
+        else
+          res.status(500).send(err);
       })
-      .catch(validationError => { res.status(400).send(validationError); return });
-
   }
 
   getAll(req: Request, res: Response) {
@@ -53,19 +50,21 @@ export class UserController implements Controller {
   update(req: Request, res: Response) {
     const validateResult = validateObjectId(req.params.userId);
     if (!validateResult.objectId) { res.status(400).send(validateResult.err); return }
-    if (!req.body) { res.status(400).send('[USER] Missing values for update!'); return }
 
-    User.findByIdAndUpdate(validateResult.objectId, req.body)
+
+    User.findByIdAndUpdate(validateResult.objectId, req.body, { runValidators: true })
       .then(updatedUser => {
         if (!updatedUser) {
-          res.status(404).send('[USER] User not found');
+          res.status(404).send('User not found');
           return;
         }
         res.status(200).json(updatedUser);
       })
       .catch(err => {
-        console.error(err);
-        res.status(500).send('[USER] Internal server error');
+        if (err.name == "ValidationError")
+          res.status(400).send(err);
+        else
+          res.status(500).send(err);
       });
   }
 
@@ -76,13 +75,12 @@ export class UserController implements Controller {
     User.findByIdAndDelete(validateResult.objectId)
       .then(deletedUser => {
         if (!deletedUser) {
-          res.status(404).send('[USER] User not found');
+          res.status(404).send('User not found');
           return;
         }
         res.status(204).send();
       })
       .catch(err => {
-        console.error(err);
         res.status(500).send(err);
       });
   }

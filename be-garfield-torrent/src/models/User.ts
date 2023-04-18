@@ -1,5 +1,6 @@
 import { ObjectId } from 'mongodb';
 import { Document, Schema, Model, model } from "mongoose";
+import uniqueValidator from "mongoose-unique-validator";
 import bcrypt from "bcrypt";
 import { validateEmail } from '../utils/validators';
 
@@ -45,6 +46,7 @@ UserSchema.pre('save', function (this: IUser, next: any) {
       })
     })
   }
+
   // Setting memberSince
   if (!user.memberSince) {
     user.memberSince = new Date();
@@ -56,6 +58,9 @@ UserSchema.method('comparePasswords',
     return bcrypt.compare(pwd, this.password);
   }
 )
+
+// Turns 'E11000' MongoDB error (unique already taken) into validationError
+UserSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
 
 const User = model<IUser, UserModel>('User', UserSchema);
 
