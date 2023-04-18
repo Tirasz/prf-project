@@ -1,0 +1,58 @@
+.container{
+  background-color: rgba(255,255,255,0);
+  height:0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-card{
+  text-align: center;
+  width: fit-content;
+  margin:auto;
+  z-index: 1;
+  padding: 15px;
+}
+
+.success{
+  background-color: #4BB543;
+  color:white;
+  text-shadow: 2px 8px 6px rgba(0,0,0,0.2), 0px -5px 35px rgba(255,255,255,0.3);
+  .mat-card-subtitle{
+      color:#214e1e;
+  }
+}
+
+.warning{
+  background-color:#FFCC00;
+  color:#a05b00;
+  text-shadow: 2px 8px 6px rgba(0,0,0,0.2), 0px -5px 35px rgba(255,255,255,0.3);
+  .mat-card-subtitle{
+      color:#613f01;
+  }
+}
+
+.error{
+  background-color:#e95c5c;
+  color:#941515;
+  text-shadow: 2px 8px 6px rgba(0,0,0,0.2), 0px -5px 35px rgba(255,255,255,0.3);
+  .mat-card-subtitle{
+      color:#530b0b;
+  }
+}
+
+.info{
+  background-color:#336699;
+  color:#063361;
+  text-shadow: 2px 8px 6px rgba(0,0,0,0.2), 0px -5px 35px rgba(255,255,255,0.3);
+  .mat-card-subtitle{
+      color:#9cb6d1;
+  }
+}
+
+    
+    
+    
+    
+
+

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject, first } from 'rxjs';
 import { Location } from '@angular/common';
 import { AuthService } from '../../shared/services/Auth/auth.service';
+import { NotificationService } from '../../shared/services/Notification/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private location: Location,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private notification: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +44,7 @@ export class LoginComponent implements OnInit {
       if (result)
         this.router.navigateByUrl('/create-torrent');
       else
-        console.log("not logged in")
+        this.notification.changeMessage('error', 'Incorrect user credentials!', 'Click to dismiss..')
     })
 
 

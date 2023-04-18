@@ -4,6 +4,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Observable, filter, first, shareReplay } from 'rxjs';
 import { User } from './shared/models/User';
 import { AuthService } from './shared/services/Auth/auth.service';
+import { NotificationService } from './shared/services/Notification/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -14,12 +15,15 @@ export class AppComponent implements OnInit {
   routes: Array<string> = [];
   page = '';
   currentUser: Observable<User | null>;
+  currentMessage: Observable<any>;
 
   constructor(
     private readonly router: Router,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    private readonly notifications: NotificationService
   ) {
     this.currentUser = this.authService.currentUser;
+    this.currentMessage = this.notifications.currentMessage;
   }
 
   ngOnInit() {

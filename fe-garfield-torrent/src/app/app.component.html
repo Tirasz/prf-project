@@ -20,6 +20,7 @@
         </ul>
       </div>
     </mat-toolbar>
+    <app-notification [type]="(currentMessage|async).type" [title]="(currentMessage|async).title" [subTitle]="(currentMessage|async).subTitle" [show]="(currentMessage|async).show"></app-notification>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -1,0 +1,6 @@
+<div class="container" >
+  <mat-card (click) ="mouseEnter()" [ngClass]="type" [@openClose]="show ? 'open' : 'closed'">
+      <mat-card-title>{{title}}</mat-card-title>
+      <mat-card-subtitle>{{subTitle}}</mat-card-subtitle>
+  </mat-card>
+</div>

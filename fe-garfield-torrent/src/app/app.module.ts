@@ -12,12 +12,13 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenuComponent } from './shared/menu/menu.component';
-import { UserService } from './shared/services/User/user.service';
 import { HttpClientModule } from '@angular/common/http';
+import { NotificationComponent } from './shared/notification/notification.component';
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent
+    MenuComponent,
+    NotificationComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +33,7 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserAnimationsModule,
     HttpClientModule
   ],
-  providers: [UserService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
