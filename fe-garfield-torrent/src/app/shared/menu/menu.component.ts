@@ -14,7 +14,6 @@ export class MenuComponent implements OnInit {
   @Input() currentUser?: null; // TODO 
   @Output() onLogout: EventEmitter<boolean> = new EventEmitter();
   constructor() {
-    console.log('constructor called.');
   }
 
   ngOnInit(): void { }
