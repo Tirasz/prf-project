@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb';
 import { Document, Schema, Model, model } from "mongoose";
 import bcrypt from "bcrypt";
+import { validateEmail } from '../utils/validators';
 
 
 export interface IUser extends Document {
@@ -19,15 +20,16 @@ interface IUserMethods {
 type UserModel = Model<IUser, {}, IUserMethods>;
 
 export const UserSchema: Schema<IUser, UserModel, IUserMethods> = new Schema({
-  email: { type: String, required: true, unique: true },
-  username: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
+  email: { type: String, required: true, unique: true, validate: [validateEmail, 'Email address is not valid'] },
+  username: { type: String, required: true, unique: true, minlength: 4, maxlength: 15 },
+  password: { type: String, required: true, },
   accessLevel: { type: Number, required: true },
   memberSince: { type: Date },
 });
 
 UserSchema.pre('save', function (this: IUser, next: any) {
   const user = this;
+
   // Hashing password
   if (user.isModified('password')) {
     bcrypt.genSalt(10, (err, salt) => {
@@ -42,6 +44,10 @@ UserSchema.pre('save', function (this: IUser, next: any) {
         return next();
       })
     })
+  }
+  // Setting memberSince
+  if (!user.memberSince) {
+    user.memberSince = new Date();
   }
 })
 

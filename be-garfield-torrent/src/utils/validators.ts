@@ -9,3 +9,8 @@ export function validateObjectId(objectId): { err: any, objectId: string | null 
 
   return { err: null, objectId };
 }
+
+export function validateEmail(email): boolean {
+  var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  return re.test(email)
+}

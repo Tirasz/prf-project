@@ -11,28 +11,31 @@ export class UserController implements Controller {
 
   create(req: Request, res: Response) {
     const newUser = new User(req.body);
-    if (!newUser) { res.status(400).send('[USER] Missing new user!'); return }
 
-    newUser.save()
-      .then(user => res.status(200).json(user))
-      .catch(err => {
-        console.error(err);
-        res.status(500).send('[USER] Internal server error');
+    User.validate(newUser)
+      .then(() => {
+        newUser.save()
+          .then(user => res.status(200).json(user))
+          .catch(err => {
+            console.error(err);
+            res.status(500).send(err);
+          })
       })
+      .catch(validationError => { res.status(400).send(validationError); return });
+
   }
 
   getAll(req: Request, res: Response) {
     User.find()
       .then(users => res.status(200).json(users))
       .catch(err => {
-        console.error(err);
-        res.status(500).send('[USER] Internal server error');
+        res.status(500).send(err);
       })
   }
 
   getById(req: Request, res: Response) {
     const validateResult = validateObjectId(req.params.userId);
-    if (!validateResult.objectId) { res.status(400).send('[USER] ' + validateResult.err); return }
+    if (!validateResult.objectId) { res.status(400).send(validateResult.err); return }
 
     User.findById(validateResult.objectId)
       .then(user => {
@@ -43,14 +46,13 @@ export class UserController implements Controller {
         res.status(200).json(user);
       })
       .catch(err => {
-        console.error(err);
-        res.status(500).send('[USER] Internal server error');
+        res.status(500).send(err);
       });
   }
 
   update(req: Request, res: Response) {
     const validateResult = validateObjectId(req.params.userId);
-    if (!validateResult.objectId) { res.status(400).send('[USER] ' + validateResult.err); return }
+    if (!validateResult.objectId) { res.status(400).send(validateResult.err); return }
     if (!req.body) { res.status(400).send('[USER] Missing values for update!'); return }
 
     User.findByIdAndUpdate(validateResult.objectId, req.body)
@@ -69,7 +71,7 @@ export class UserController implements Controller {
 
   delete(req: Request, res: Response) {
     const validateResult = validateObjectId(req.params.userId);
-    if (!validateResult.objectId) { res.status(400).send('[USER] ' + validateResult.err); return }
+    if (!validateResult.objectId) { res.status(400).send(validateResult.err); return }
 
     User.findByIdAndDelete(validateResult.objectId)
       .then(deletedUser => {
@@ -81,7 +83,7 @@ export class UserController implements Controller {
       })
       .catch(err => {
         console.error(err);
-        res.status(500).send('[USER] Internal server error');
+        res.status(500).send(err);
       });
   }
 
