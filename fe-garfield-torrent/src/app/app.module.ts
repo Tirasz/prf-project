@@ -12,7 +12,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCardModule } from '@angular/material/card';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MenuComponent } from './shared/menu/menu.component';
-
+import { UserService } from './shared/services/User/user.service';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,8 +30,9 @@ import { MenuComponent } from './shared/menu/menu.component';
     FlexLayoutModule,
     MatListModule,
     BrowserAnimationsModule,
+    HttpClientModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
