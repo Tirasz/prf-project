@@ -4,9 +4,9 @@ import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors, Abst
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, of, switchMap } from 'rxjs';
 import { UserService } from '../../shared/services/User/user.service';
-import { User } from '../../shared/models/User';
+import { ResponseErrorToString, User } from '../../shared/models/User';
 import { AuthService } from '../../shared/services/Auth/auth.service';
-
+import { NotificationService } from '../../shared/services/Notification/notification.service';
 
 export function matchValues(matchTo: string): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -37,7 +37,8 @@ export class RegisterComponent implements OnInit {
     private location: Location,
     private router: Router,
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private notifications: NotificationService
   ) { }
 
   ngOnInit(): void {
@@ -54,7 +55,7 @@ export class RegisterComponent implements OnInit {
     this.isLoading.next(true);
     this.userService.createUser(newUser).pipe(
       catchError(err => {
-        console.log(err);
+        this.notifications.changeMessage('error', 'Registration failed', ResponseErrorToString(err) + '\n Click to dismiss...',);
         return of(null);
       }),
       switchMap(result => {

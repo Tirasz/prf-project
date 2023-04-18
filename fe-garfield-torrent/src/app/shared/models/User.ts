@@ -20,6 +20,21 @@ interface UserValidationError {
 
 export type UserResponseError = UserValidationError | null;
 
+function capitalizeFirstLetter(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+export function ResponseErrorToString(err: UserResponseError) {
+  let errorMsg = "";
+  if (!err)
+    return "Something went wrong...";
+
+  (err as UserValidationError).errors.forEach(err => {
+    errorMsg += capitalizeFirstLetter(err.field) + ": " + capitalizeFirstLetter(err.message) + "\n";
+  })
+  return errorMsg;
+}
+
 export function fromErrorResponse(respObj: HttpErrorResponse): UserValidationError | null {
   if (respObj.status == 400) {
     const error = respObj.error;
