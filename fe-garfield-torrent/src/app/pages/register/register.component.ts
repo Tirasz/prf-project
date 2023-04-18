@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors, AbstractControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, catchError, of, switchMap } from 'rxjs';
+import { UserService } from '../../shared/services/User/user.service';
+import { User } from '../../shared/models/User';
+import { AuthService } from '../../shared/services/Auth/auth.service';
 
 
 export function matchValues(matchTo: string): ValidatorFn {
@@ -32,20 +35,41 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private location: Location,
-    private router: Router
+    private router: Router,
+    private userService: UserService,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
   }
 
   onSubmit() {
-    const newUser = {
-      email: this.registerForm.get('email')?.value,
-      username: this.registerForm.get('username')?.value,
-      password: this.registerForm.get('password')?.value,
-    };
-    console.log('TRIED CREATING USER: ', newUser);
+    const email = this.registerForm.get('email')?.value;
+    const username = this.registerForm.get('username')?.value;
+    const password = this.registerForm.get('password')?.value;
+    if (!(email && username && password))
+      return
+
+    const newUser: User = { email, username, password, accessLevel: 1 };
     this.isLoading.next(true);
+    this.userService.createUser(newUser).pipe(
+      catchError(err => {
+        console.log(err);
+        return of(null);
+      }),
+      switchMap(result => {
+        if (result)
+          return this.authService.login({ username: result.email, password })
+        return of(false)
+      })
+    ).subscribe(authResult => {
+      this.isLoading.next(false);
+      if (authResult) {
+        this.router.navigateByUrl('/create-torrent')
+      }
+    })
+
+
   }
 
   goBack() {
