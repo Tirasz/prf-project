@@ -1,0 +1,21 @@
+{
+  "name": "garfield-torrent",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "cd fe-garfield-torrent && ng build && cd ../be-garfield-torrent && npm run build",
+    "run": "cd ../be-garfield-torrent && npm run serve"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tirasz/prf-project.git"
+  },
+  "author": "Rózsa Balázs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tirasz/prf-project/issues"
+  },
+  "homepage": "https://github.com/Tirasz/prf-project#readme"
+}
