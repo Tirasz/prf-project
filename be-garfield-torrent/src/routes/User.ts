@@ -6,10 +6,10 @@ const userController = new UserController();
 const router = express.Router();
 
 router.get('/', userController.getAll);
-router.get('/:id', userController.getById);
+router.get('/:userId', userController.getById);
 router.post('/', userController.create);
-router.put('/:id', userController.update);
-router.delete('/:id', userController.delete);
+router.put('/:userId', userController.update);
+router.delete('/:userId', userController.delete);
 
 export default router;
 

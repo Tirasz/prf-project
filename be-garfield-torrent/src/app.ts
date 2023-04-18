@@ -1,4 +1,4 @@
-import { environment } from './environment';
+import environment from './environment';
 import routes from './routes'
 import passport from './passport-config';
 
