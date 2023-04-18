@@ -1,11 +1,11 @@
-export function validateUserId(userId): { err: any, userId: string | null } {
-  if (!userId) {
-    return { err: 'Missing user id!', userId: null }
+export function validateObjectId(objectId): { err: any, objectId: string | null } {
+  if (!objectId) {
+    return { err: 'Missing id!', objectId: null }
   }
 
-  if (!userId.match(/^[0-9a-fA-F]{24}$/)) {
-    return { err: 'User id is not valid!', userId: null }
+  if (!objectId.match(/^[0-9a-fA-F]{24}$/)) {
+    return { err: 'Object id is not valid!', objectId: null }
   }
 
-  return { err: null, userId };
+  return { err: null, objectId };
 }

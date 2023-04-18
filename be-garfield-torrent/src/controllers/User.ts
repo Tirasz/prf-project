@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import User, { bootstrapUsers } from '../models/User'
 import { Controller } from './Controller';
-import { validateUserId } from '../utils/validators';
+import { validateObjectId } from '../utils/validators';
 
 export class UserController implements Controller {
 
@@ -31,10 +31,10 @@ export class UserController implements Controller {
   }
 
   getById(req: Request, res: Response) {
-    const validateResult = validateUserId(req.params.userId);
-    if (!validateResult.userId) { res.status(400).send('[USER] ' + validateResult.err); return }
+    const validateResult = validateObjectId(req.params.userId);
+    if (!validateResult.objectId) { res.status(400).send('[USER] ' + validateResult.err); return }
 
-    User.findById(validateResult.userId)
+    User.findById(validateResult.objectId)
       .then(user => {
         if (!user) {
           res.status(404).send('[USER] User not found');
@@ -49,11 +49,11 @@ export class UserController implements Controller {
   }
 
   update(req: Request, res: Response) {
-    const validateResult = validateUserId(req.params.userId);
-    if (!validateResult.userId) { res.status(400).send('[USER] ' + validateResult.err); return }
+    const validateResult = validateObjectId(req.params.userId);
+    if (!validateResult.objectId) { res.status(400).send('[USER] ' + validateResult.err); return }
     if (!req.body) { res.status(400).send('[USER] Missing values for update!'); return }
 
-    User.findByIdAndUpdate(validateResult.userId, req.body)
+    User.findByIdAndUpdate(validateResult.objectId, req.body)
       .then(updatedUser => {
         if (!updatedUser) {
           res.status(404).send('[USER] User not found');
@@ -68,10 +68,10 @@ export class UserController implements Controller {
   }
 
   delete(req: Request, res: Response) {
-    const validateResult = validateUserId(req.params.userId);
-    if (!validateResult.userId) { res.status(400).send('[USER] ' + validateResult.err); return }
+    const validateResult = validateObjectId(req.params.userId);
+    if (!validateResult.objectId) { res.status(400).send('[USER] ' + validateResult.err); return }
 
-    User.findByIdAndDelete(validateResult.userId)
+    User.findByIdAndDelete(validateResult.objectId)
       .then(deletedUser => {
         if (!deletedUser) {
           res.status(404).send('[USER] User not found');
