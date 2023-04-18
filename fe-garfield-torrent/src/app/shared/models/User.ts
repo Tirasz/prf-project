@@ -39,3 +39,8 @@ export function fromResponseObject(respObj: any): User {
   return { ...respObj, id: respObj._id };
 }
 
+export interface UserCredentials {
+  username: string, // email
+  password: string
+}
+

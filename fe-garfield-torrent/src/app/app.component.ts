@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs';
+import { Observable, filter, first, shareReplay } from 'rxjs';
+import { User } from './shared/models/User';
+import { AuthService } from './shared/services/Auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +13,14 @@ import { filter } from 'rxjs';
 export class AppComponent implements OnInit {
   routes: Array<string> = [];
   page = '';
-  currentUser = null;
+  currentUser: Observable<User | null>;
 
   constructor(
-    private readonly router: Router
-  ) { }
+    private readonly router: Router,
+    private readonly authService: AuthService
+  ) {
+    this.currentUser = this.authService.currentUser;
+  }
 
   ngOnInit() {
     this.routes = this.router.config.map(conf => conf.path) as string[];
@@ -29,7 +34,9 @@ export class AppComponent implements OnInit {
   }
 
   logout(_?: boolean) {
-    console.log('You pressed logout gj')
+    this.authService.logout().pipe(first()).subscribe(() => {
+      this.router.navigateByUrl('/login');
+    })
   }
 
   changePage(selectedPage: string) {

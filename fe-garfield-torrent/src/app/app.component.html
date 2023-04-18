@@ -1,6 +1,6 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav>
-    <app-menu (selectedPage)="changePage($event)" [currentPage]="page" *ngIf="page" (onCloseSidenav)="onClose($event, sidenav)" [currentUser] ="currentUser" (onLogout)="logout($event)"></app-menu>
+    <app-menu (selectedPage)="changePage($event)" [currentPage]="page" *ngIf="page" (onCloseSidenav)="onClose($event, sidenav)" [currentUser] ="currentUser | async" (onLogout)="logout($event)"></app-menu>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
@@ -13,10 +13,10 @@
       <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
         <ul fxLayout fxLayoutGap="10px" class="navigation-items">
           <li><a routerLink="/browser">Browse torrents</a></li>
-          <li *ngIf="(currentUser)"><a routerLink="/create-torrent">Upload torrent</a></li>
-          <li *ngIf="!(currentUser)"><a routerLink="/login" >Login</a></li>
-          <li *ngIf="!(currentUser)"><a routerLink="/register">Register</a></li>
-          <li *ngIf="(currentUser)"><a routerLink="/login" (click)="logout()">Logout</a></li>
+          <li *ngIf="(currentUser | async)"><a routerLink="/create-torrent">Upload torrent</a></li>
+          <li *ngIf="!(currentUser | async)"><a routerLink="/login" >Login</a></li>
+          <li *ngIf="!(currentUser | async)"><a routerLink="/register">Register</a></li>
+          <li *ngIf="(currentUser | async)"><a routerLink="/login" (click)="logout()">Logout</a></li>
         </ul>
       </div>
     </mat-toolbar>

@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit, EventEmitter, Output, Input } from '@angular/core';
+import { User } from '../models/User';
 
 
 @Component({
@@ -11,7 +12,7 @@ export class MenuComponent implements OnInit {
   @Input() currentPage: string = '';
   @Output() selectedPage: EventEmitter<string> = new EventEmitter();
   @Output() onCloseSidenav: EventEmitter<boolean> = new EventEmitter();
-  @Input() currentUser?: null; // TODO 
+  @Input() currentUser?: User | null;
   @Output() onLogout: EventEmitter<boolean> = new EventEmitter();
   constructor() {
   }

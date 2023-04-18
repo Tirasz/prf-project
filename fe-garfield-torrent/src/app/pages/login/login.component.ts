@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, first } from 'rxjs';
 import { Location } from '@angular/common';
+import { AuthService } from '../../shared/services/Auth/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private location: Location,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -28,9 +30,23 @@ export class LoginComponent implements OnInit {
   login() {
     const email = this.loginForm.get('email')?.value;
     const password = this.loginForm.get('password')?.value;
+    if (!(email && password))
+      return
 
-    console.log('LOGGING IN WITH: ', email, password)
     this.isLoading.next(true);
+    this.authService.login({
+      username: email,
+      password: password
+    }).pipe(first()).subscribe(result => {
+      this.isLoading.next(false);
+      if (result)
+        this.router.navigateByUrl('/create-torrent');
+      else
+        console.log("not logged in")
+    })
+
+
+
   }
 
   goBack() {
