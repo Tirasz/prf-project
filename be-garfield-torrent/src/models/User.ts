@@ -106,7 +106,7 @@ function bootstrapAdmin() {
 }
 
 function bootstrapTestUser() {
-  User.findOne({ username: 'test_elek' })
+  User.findOne({ email: 'test@test.com' })
     .then(testUser => {
       if (testUser) {
         console.log('There is already a test user!');
