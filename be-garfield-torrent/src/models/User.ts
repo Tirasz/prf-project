@@ -43,6 +43,8 @@ UserSchema.pre('findOneAndUpdate', function (this: UpdateQuery<IUser>, next: any
         return next();
       })
     })
+  } else {
+    return next();
   }
 });
 
