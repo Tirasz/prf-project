@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject, catchError, map, of, share } from 'rxjs';
-import { User, UserCredentials, fromResponseObject } from '../../models/User';
+import { BehaviorSubject, Observable, Subject, catchError, filter, map, of, share } from 'rxjs';
+import { User, UserCredentials, UserResponse, fromResponseObject } from '../../models/User';
 
 const BASE_URL = '/api/auth';
 
@@ -39,9 +39,9 @@ export class AuthService {
   }
 
   refreshCurrentUser(): void {
-    this.http.get<{ user: any }>(BASE_URL + '/status').pipe(
+    this.http.get<UserResponse>(BASE_URL + '/status').pipe(
       map(result => {
-        if (result)
+        if (result._id)
           return fromResponseObject(result);
         return null;
       }),

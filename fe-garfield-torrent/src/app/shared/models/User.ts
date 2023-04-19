@@ -9,6 +9,10 @@ export interface User {
   memberSince?: Date
 };
 
+export interface UserResponse extends User {
+  _id: string
+}
+
 interface UserFieldValidationError {
   field: string,
   message: string
@@ -51,8 +55,15 @@ export function fromErrorResponse(respObj: HttpErrorResponse): UserValidationErr
   return null;
 }
 
-export function fromResponseObject(respObj: any): User {
-  return { ...respObj, id: respObj._id };
+export function fromResponseObject(respObj: UserResponse): User {
+  return {
+    id: respObj._id,
+    email: respObj.email,
+    username: respObj.username,
+    password: respObj.password,
+    accessLevel: respObj.accessLevel,
+    memberSince: respObj.memberSince
+  };
 }
 
 export interface UserCredentials {
