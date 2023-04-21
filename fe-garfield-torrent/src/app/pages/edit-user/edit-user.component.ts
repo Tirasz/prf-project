@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { BehaviorSubject, catchError, first, of } from 'rxjs';
+import { BehaviorSubject, Subject, catchError, first, of, takeUntil } from 'rxjs';
 import { matchValues } from '../register/register.component';
 import { Router } from '@angular/router';
 import { UserService } from '../../shared/services/User/user.service';
@@ -14,7 +14,7 @@ import { ResponseErrorToString, User } from '../../shared/models/User';
   templateUrl: './edit-user.component.html',
   styleUrls: ['./edit-user.component.scss']
 })
-export class EditUserComponent implements OnInit {
+export class EditUserComponent implements OnInit, OnDestroy {
 
   constructor(
     private location: Location,
@@ -24,6 +24,7 @@ export class EditUserComponent implements OnInit {
     private notifications: NotificationService
   ) { }
 
+  onDestroy$: Subject<boolean> = new Subject<boolean>();
   isLoading = new BehaviorSubject(false);
   editUserForm = new FormGroup({
     username: new FormControl('', [Validators.minLength(3), Validators.maxLength(10)]),
@@ -36,11 +37,17 @@ export class EditUserComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.refreshCurrentUser();
-    this.authService.currentUser.pipe(first()).subscribe(user => {
+    this.authService.currentUser.pipe(
+      takeUntil(this.onDestroy$)
+    ).subscribe(user => {
       this.currentUserId = user!.id!;
       this.editUserForm.controls['email'].setValue(user!.email);
       this.editUserForm.controls['username'].setValue(user!.username);
     })
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroy$.next(true)
   }
 
   goBack() {
@@ -69,7 +76,7 @@ export class EditUserComponent implements OnInit {
 
     this.userService.updateUser(editedUser).pipe(
       catchError(err => {
-        this.notifications.changeMessage('error', 'Registration failed', ResponseErrorToString(err) + '\n Click to dismiss...',);
+        this.notifications.changeMessage('error', 'Profile update failed', ResponseErrorToString(err) + '\n Click to dismiss...',);
         return of(null);
       }),
       first()

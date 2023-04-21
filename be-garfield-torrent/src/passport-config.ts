@@ -1,6 +1,15 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
-import User from './models/User';
+import User, { IUser } from './models/User';
+
+declare global {
+  namespace Express {
+    interface User extends IUser {
+      id?: string
+    }
+  }
+}
+
 
 const authenticateUser = (email, password, done) => {
   User.findOne({ email })
@@ -23,15 +32,21 @@ const strategy = new LocalStrategy(authenticateUser);
 passport.use('local', strategy);
 
 passport.serializeUser((user, done) => {
-  if (!user)
-    return done('No user to login!', null);
-  return done(null, user);
+  if (!user._id)
+    done('No user to login!', null);
+  done(null, user._id);
 })
 
-passport.deserializeUser((user, done) => {
-  if (!user)
+passport.deserializeUser((userId: string, done) => {
+  if (!userId)
     return done("No user to logout!", null);
-  return done(null, user);
+  User.findById(userId)
+    .then(user => {
+      if (user)
+        user.id = user._id.toString();
+      return done(null, user);
+    })
+    .catch(err => { return done(err, null); })
 });
 
 export default passport;

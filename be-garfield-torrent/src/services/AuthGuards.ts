@@ -12,14 +12,14 @@ export const isAdminGuard = (req, res, next) => {
 }
 
 export const isSelf = (req, res, next) => {
-  if (req.user._id === req.params.userId)
+  if (req.user.id === req.params.userId)
     return next()
   return res.status(403).send('Not authorized!');
 }
 
 export const isAdminOrSelf = (req, res, next) => {
   const user = req.user;
-  if (user.accessLevel == 3 || user._id === req.params.userId)
+  if (user.accessLevel == 3 || user.id === req.params.userId)
     return next();
   return res.status(403).send('Not authorized!');
 }
