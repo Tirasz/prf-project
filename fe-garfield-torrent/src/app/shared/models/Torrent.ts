@@ -20,10 +20,18 @@ export interface Torrent {
 };
 
 
+const deletedUser: User = {
+  id: '<DELETED USER>',
+  email: '<DELETED USER>',
+  username: '<DELETED USER>',
+  password: '<DELETED USER>',
+  accessLevel: 0
+}
+
 export function fromTorrentResponse(respObj: TorrentResponse): Torrent {
   return {
     id: respObj._id,
-    owner: fromUserResponse(respObj.owner),
+    owner: respObj.owner ? fromUserResponse(respObj.owner) : deletedUser,
     created: respObj.created,
     title: respObj.title,
     description: respObj.description,

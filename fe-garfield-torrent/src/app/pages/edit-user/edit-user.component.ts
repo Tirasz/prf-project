@@ -83,4 +83,18 @@ export class EditUserComponent implements OnInit, OnDestroy {
       first()
     ).subscribe(() => { this.isLoading.next(false) });
   }
+
+  deleteUser() {
+    this.userService.deleteUserFromId(this.currentUserId).pipe(
+      catchError(err => {
+        this.notifications.changeMessage('error', 'Profile deletion failed', 'Click to dismiss...',);
+        return of(null);
+      }),
+      first()
+    ).subscribe((deletedUser) => {
+      this.authService.logout();
+      this.notifications.changeMessage('success', 'We will miss you, ' + deletedUser!.username, 'Click to dismiss...');
+      this.router.navigate(['/browser']);
+    })
+  }
 }

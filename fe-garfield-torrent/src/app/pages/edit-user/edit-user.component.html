@@ -26,13 +26,17 @@
               <input matInput type="password" formControlName="rePassword" />
               <mat-error *ngIf="editUserForm.value.rePassword">Passwords must match!</mat-error>
           </mat-form-field>
-          <div>
-              <span class="buttons">
-                  <button mat-raised-button color="primary" type="submit" [disabled]="!editUserForm.valid">Update</button>
-              </span><span class="buttons">
-                  <button mat-raised-button color="primary" (click)="goBack()">Back</button>
-              </span>
-          </div>
       </form>
+      <div>
+        <span class="buttons">
+            <button mat-raised-button color="primary" (click)="onSubmit()" [disabled]="!editUserForm.valid">Update</button>
+        </span>
+        <span class="buttons">
+          <button mat-raised-button color="primary" (click)="goBack()">Back</button>
+        </span>
+        <span class="buttons">
+          <button mat-raised-button color="warn" (click)="deleteUser()">Delete</button>
+        </span>
+    </div>
   </div>
 </div>
