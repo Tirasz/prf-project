@@ -40,7 +40,7 @@ const routes: Routes = [
   {
     path: 'user-browser',
     canActivate: [AuthGuard, IsAdminGuard],
-    loadChildren: () => import('./pages/user-browser/user-browser/user-browser.module').then(m => m.UserBrowserModule)
+    loadChildren: () => import('./pages/user-browser/user-browser.module').then(m => m.UserBrowserModule)
   },
   {
     path: '**',
