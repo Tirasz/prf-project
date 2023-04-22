@@ -70,7 +70,20 @@ export class TorrentController implements Controller {
   }
 
   delete(req: Request, res: Response): void {
-    throw new Error('Method not implemented.');
+    const validateResult = validateObjectId(req.params.torrentId);
+    if (!validateResult.objectId) { res.status(400).send(validateResult.err); return }
+
+    Torrent.findByIdAndDelete(validateResult.objectId)
+      .then(deletedTorrent => {
+        if (!deletedTorrent) {
+          res.status(404).send('Torrent not found');
+          return;
+        }
+        res.status(204).send(deletedTorrent);
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      });
   }
 
 }
