@@ -17,6 +17,7 @@
           <li *ngIf="(currentUser | async)"><a routerLink="/create-torrent">Upload torrent</a></li>
           <li *ngIf="!(currentUser | async)"><a routerLink="/login" >Login</a></li>
           <li *ngIf="!(currentUser | async)"><a routerLink="/register">Register</a></li>
+          <li *ngIf="(currentUser | async)?.accessLevel === 3"><a routerLink="/user-browser">Manage users</a></li>
           <li *ngIf="(currentUser | async)"><a routerLink="/login" (click)="logout()">Logout</a></li>
         </ul>
       </div>
