@@ -49,7 +49,24 @@ export class TorrentController implements Controller {
   }
 
   update(req: Request, res: Response): void {
-    throw new Error('Method not implemented.');
+    const validateResult = validateObjectId(req.params.torrentId);
+    if (!validateResult.objectId) { res.status(400).send(validateResult.err); return }
+
+
+    Torrent.findByIdAndUpdate(validateResult.objectId, req.body, { runValidators: true })
+      .then(updatedTorrent => {
+        if (!updatedTorrent) {
+          res.status(404).send('Torrent not found');
+          return;
+        }
+        res.status(200).json(updatedTorrent);
+      })
+      .catch(err => {
+        if (err.name === "ValidationError" || err.name === "Bad request")
+          res.status(400).send(err);
+        else
+          res.status(500).send(err);
+      });
   }
 
   delete(req: Request, res: Response): void {

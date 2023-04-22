@@ -1,4 +1,4 @@
-import { ObjectId, Schema, model } from 'mongoose';
+import { ObjectId, Schema, UpdateQuery, model } from 'mongoose';
 import uniqueValidator from "mongoose-unique-validator";
 
 export interface ITorrent extends Document {
@@ -25,6 +25,14 @@ TorrentSchema.pre('save', function (this: ITorrent, next: any) {
   }
   return next();
 });
+
+TorrentSchema.pre('findOneAndUpdate', function (this: UpdateQuery<ITorrent>, next: any) {
+  const fieldsToUpdate = this.getUpdate();
+  if (fieldsToUpdate.owner) {
+    return next({ name: 'Bad request', message: 'Cannot change owner of torrents!' });
+  }
+  return next()
+})
 
 // Turns 'E11000' MongoDB error (unique already taken) into validationError
 TorrentSchema.plugin(uniqueValidator, { message: '{PATH} already exists!' });
