@@ -22,6 +22,7 @@ export interface ValidationError {
 export type ResponseError = ValidationError | null;
 
 export function fromErrorResponse(respObj: HttpErrorResponse): ResponseError {
+  debugger
   if (respObj.status == 400) {
     const error = respObj.error;
     let validationErrors: FieldValidationError[] = [];

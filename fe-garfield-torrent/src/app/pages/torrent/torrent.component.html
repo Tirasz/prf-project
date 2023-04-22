@@ -26,8 +26,8 @@
       <mat-card class="info-card">
         <mat-card-title>Actions</mat-card-title>
         <mat-card-actions>
-          <button mat-button>EDIT</button>
-          <button mat-button class="delete-btn">DELETE</button>
+          <button mat-button (click)="toEdit(Torrent.id!)">EDIT</button>
+          <button mat-button (click)="deleteTorrent(Torrent)" class="delete-btn">DELETE</button>
         </mat-card-actions>
       </mat-card>
 

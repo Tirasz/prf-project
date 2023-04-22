@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Torrent } from '../../shared/models/Torrent';
 import { AuthService } from '../../shared/services/Auth/auth.service';
 import { Observable, distinctUntilChanged, map, merge, mergeMap, switchMap, zip } from 'rxjs';
+import { NotificationService } from '../../shared/services/Notification/notification.service';
 
 @Component({
   selector: 'app-torrent',
@@ -19,7 +20,8 @@ export class TorrentComponent implements OnInit {
     private torrentService: TorrentService,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private notifications: NotificationService
   ) {
     this.torrent = this.route.params.pipe(
       distinctUntilChanged(),
@@ -38,6 +40,13 @@ export class TorrentComponent implements OnInit {
 
   toEdit(id: string) {
     this.router.navigate(['/edit-torrent', id]);
+  }
+
+  deleteTorrent(torrent: Torrent) {
+    this.torrentService.deleteTorrent(torrent).subscribe(() => {
+      this.router.navigate(['/browser']);
+      this.notifications.changeMessage('success', 'Torrent deleted', 'Click to dismiss..');
+    })
   }
 
 }

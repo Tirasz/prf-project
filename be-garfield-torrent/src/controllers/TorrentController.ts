@@ -79,7 +79,7 @@ export class TorrentController implements Controller {
           res.status(404).send('Torrent not found');
           return;
         }
-        res.status(204).send(deletedTorrent);
+        res.status(200).send(deletedTorrent);
       })
       .catch(err => {
         res.status(500).send(err);
