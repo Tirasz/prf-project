@@ -33,7 +33,7 @@ export class UserController implements Controller {
     User.findById(validateResult.objectId)
       .then(user => {
         if (!user) {
-          res.status(404).send('[USER] User not found');
+          res.status(404).send('User not found');
           return;
         }
         res.status(200).json(user);
