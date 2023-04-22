@@ -27,6 +27,7 @@ export class UserBrowserComponent implements AfterViewInit {
     private userService: UserService,
     private authService: AuthService,
     private notifications: NotificationService,
+    private router: Router
   ) {
     this.currentUser = this.authService.currentUser.asObservable();
   }
@@ -42,6 +43,10 @@ export class UserBrowserComponent implements AfterViewInit {
   ngOnInit(): void { }
 
   deleteUser(user: User) {
+    if (this.authService.currentUser.getValue()?.id! === user.id!) {
+      this.router.navigate(['/browser']);
+    }
+
     this.userService.deleteUser(user).pipe(
       filter(user => Boolean(user)),
       switchMap(result => {
@@ -78,7 +83,7 @@ export class UserBrowserComponent implements AfterViewInit {
     ).subscribe(refreshedUsers => {
       if (refreshedUsers) {
         this.dataSource.data = refreshedUsers;
-        this.notifications.changeMessage('success', 'User promoted', 'Click to dismiss...');
+        this.notifications.changeMessage('success', 'User updated', 'Click to dismiss...');
       }
     })
   }
