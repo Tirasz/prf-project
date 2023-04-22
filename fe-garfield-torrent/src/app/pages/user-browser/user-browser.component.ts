@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { UserService } from '../../shared/services/User/user.service';
 import { User } from '../../shared/models/User';
+import { catchError, filter, first, of, switchMap, tap } from 'rxjs';
+import { NotificationService } from '../../shared/services/Notification/notification.service';
 
 @Component({
   selector: 'app-user-browser',
@@ -21,7 +23,8 @@ export class UserBrowserComponent implements AfterViewInit {
 
   constructor(
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private notifications: NotificationService
   ) { }
 
   ngAfterViewInit(): void {
@@ -35,10 +38,42 @@ export class UserBrowserComponent implements AfterViewInit {
   ngOnInit(): void { }
 
   deleteUser(user: User) {
-    console.log(user);
+    this.userService.deleteUser(user).pipe(
+      filter(user => Boolean(user)),
+      switchMap(result => {
+        return this.userService.getAllUsers();
+      }),
+      first(),
+      catchError(err => {
+        console.log(err);
+        this.notifications.changeMessage('error', 'Something went wrong', 'Click to dismiss...');
+        return of(null);
+      })
+    ).subscribe(refreshedUsers => {
+      if (refreshedUsers) {
+        this.dataSource.data = refreshedUsers;
+        this.notifications.changeMessage('success', 'User deleted', 'Click to dismiss...');
+      }
+    })
   }
 
   promoteUser(user: User) {
-    console.log(user);
+    this.userService.promoteUser(user).pipe(
+      filter(user => Boolean(user)),
+      switchMap(result => {
+        return this.userService.getAllUsers();
+      }),
+      first(),
+      catchError(err => {
+        console.log(err);
+        this.notifications.changeMessage('error', 'Something went wrong', 'Click to dismiss...');
+        return of(null);
+      })
+    ).subscribe(refreshedUsers => {
+      if (refreshedUsers) {
+        this.dataSource.data = refreshedUsers;
+        this.notifications.changeMessage('success', 'User promoted', 'Click to dismiss...');
+      }
+    })
   }
 }
