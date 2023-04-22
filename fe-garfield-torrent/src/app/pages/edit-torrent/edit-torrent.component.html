@@ -24,11 +24,14 @@
               <textarea matInput type="text" formControlName="description" required></textarea>
               <mat-error *ngIf="editTorrentForm.value.description">Description is required!</mat-error>
             </mat-form-field>
-            <div>
-              <span class="buttons">
-                  <button mat-raised-button color="primary" type="submit" [disabled]="!editTorrentForm.valid">Edit</button>
-              </span>
-          </div>
       </form>
+      <div>
+        <span class="buttons">
+            <button mat-raised-button color="primary" (click)="updateTorrent()" [disabled]="!editTorrentForm.valid">Update</button>
+        </span>
+        <span class="buttons">
+          <button mat-raised-button color="primary" (click)="goBack()">Back</button>
+        </span>
+    </div>
   </div>
 </div>

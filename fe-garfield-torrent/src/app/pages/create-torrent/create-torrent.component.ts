@@ -7,6 +7,7 @@ import { BehaviorSubject, catchError, delay, first, map, of, switchMap } from 'r
 import { Torrent, TorrentCategory } from '../../shared/models/Torrent';
 import { AuthService } from '../../shared/services/Auth/auth.service';
 import { ResponseErrorToString } from '../../shared/models/Response';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-create-torrent',
@@ -25,6 +26,7 @@ export class CreateTorrentComponent {
   })
 
   constructor(
+    private location: Location,
     private torrentService: TorrentService,
     private router: Router,
     private notifications: NotificationService,
@@ -33,6 +35,10 @@ export class CreateTorrentComponent {
 
   getRandomInt(max: number) {
     return Math.floor(Math.random() * max);
+  }
+
+  goBack() {
+    this.location.back();
   }
 
   createTorrent() {

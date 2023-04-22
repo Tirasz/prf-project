@@ -6,6 +6,7 @@ import { Torrent, TorrentCategory } from '../../shared/models/Torrent';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { BehaviorSubject, Observable, catchError, delay, distinctUntilChanged, first, map, of, switchMap, tap } from 'rxjs';
 import { ResponseErrorToString } from '../../shared/models/Response';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-edit-torrent',
@@ -25,6 +26,7 @@ export class EditTorrentComponent {
   })
 
   constructor(
+    private location: Location,
     private route: ActivatedRoute,
     private torrentService: TorrentService,
     private router: Router,
@@ -43,6 +45,10 @@ export class EditTorrentComponent {
       this.isLoading.next(false);
     })
 
+  }
+
+  goBack() {
+    this.location.back();
   }
 
 
