@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './shared/guards/auth-guard.guard';
 import { IsOwnerGuard } from './shared/guards/is-owner-guard.guard';
+import { IsAdminGuard } from './shared/guards/is-admin.guard';
 
 const routes: Routes = [
   {
@@ -35,6 +36,11 @@ const routes: Routes = [
     path: 'edit-torrent/:id',
     canActivate: [AuthGuard, IsOwnerGuard],
     loadChildren: () => import('./pages/edit-torrent/edit-torrent.module').then(m => m.EditTorrentModule)
+  },
+  {
+    path: 'user-browser',
+    canActivate: [AuthGuard, IsAdminGuard],
+    loadChildren: () => import('./pages/user-browser/user-browser/user-browser.module').then(m => m.UserBrowserModule)
   },
   {
     path: '**',
