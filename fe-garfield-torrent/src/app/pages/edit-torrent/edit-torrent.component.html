@@ -1,15 +1,15 @@
 <div class="main_component">
-  <div class="div-flex" *ngIf="isLoading">
+  <div class="div-flex" *ngIf="isLoading | async">
           <mat-spinner></mat-spinner>
   </div>
   
-  <div class="div-flex" *ngIf="!isLoading">
+  <div class="div-flex" *ngIf="!(isLoading | async)">
       <h1>Edit your torrent!</h1>
       <form [formGroup]="editTorrentForm" (ngSubmit)="updateTorrent()">
           <mat-form-field>
-              <mat-label for="name">Torrent title: </mat-label>
-              <input matInput type="text" formControlName="name" required type="text"/>
-              <mat-error *ngIf="editTorrentForm.value.name">Name must be betweeen 3 and 40 characters long!</mat-error>
+              <mat-label for="title">Torrent title: </mat-label>
+              <input matInput type="text" formControlName="title" required type="text"/>
+              <mat-error *ngIf="editTorrentForm.value.title">Name must be betweeen 3 and 40 characters long!</mat-error>
           </mat-form-field>
           <mat-form-field appearance="fill">
               <mat-label>Select a category</mat-label>
