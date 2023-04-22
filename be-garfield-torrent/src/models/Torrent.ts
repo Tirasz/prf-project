@@ -26,8 +26,8 @@ export const TorrentSchema = new Schema({
   description: { type: String, required: true, },
   created: { type: Date },
   category: { type: String, required: true, enum: TorrentCategory },
-  seeders: { type: Number, required: true },
-  leechers: { type: Number, required: true }
+  seeders: { type: Number, required: true, min: 0 },
+  leechers: { type: Number, required: true, min: 0 }
 });
 
 
