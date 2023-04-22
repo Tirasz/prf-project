@@ -31,10 +31,20 @@
                   {{(element.accessLevel == 3)? 'Admin' : 'User'}}
               </mat-cell>
           </ng-container> 
+
+          <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Actions</mat-header-cell>
+            <mat-cell class="name-cell" *matCellDef="let element">
+                <div class="actions-container">
+                  <button class="action" [disabled]="element.accessLevel == 3" mat-raised-button color="primary" (click)="promoteUser(element)">Promote</button>
+                  <button class="action" mat-raised-button color="warn" (click)="deleteUser(element)">Delete</button>
+                </div>
+            </mat-cell>
+        </ng-container> 
           <mat-header-row *matHeaderRowDef="columnNames"></mat-header-row>
           <!--tr mat-header-row *matHeaderRowDef="columnNames"></tr-->
           <!--tr mat-row *matRowDef="let row; columns: columnNames;" ></tr-->
-          <mat-row *matRowDef="let row; columns: columnNames;" (click)="onRowClicked(row)"></mat-row>
+          <mat-row *matRowDef="let row; columns: columnNames;"></mat-row>
           
       </table>
       <mat-paginator [pageSize]="15"></mat-paginator>

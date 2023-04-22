@@ -13,7 +13,7 @@ import { User } from '../../shared/models/User';
 })
 export class UserBrowserComponent implements AfterViewInit {
 
-  columnNames: string[] = ['username', 'email', 'memberSince', 'accessLevel']
+  columnNames: string[] = ['username', 'email', 'memberSince', 'accessLevel', 'actions']
   dataSource = new MatTableDataSource<User>();
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -34,7 +34,11 @@ export class UserBrowserComponent implements AfterViewInit {
 
   ngOnInit(): void { }
 
-  onRowClicked(row: any) {
-    this.router.navigate(['/torrent', row.id]);
+  deleteUser(user: User) {
+    console.log(user);
+  }
+
+  promoteUser(user: User) {
+    console.log(user);
   }
 }
