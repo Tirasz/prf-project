@@ -1,9 +1,15 @@
-function capFirst(string) {
+import { TorrentCategory } from '../models/Torrent';
+
+export function capFirst(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function getRandomInt(min, max) {
+export function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
+}
+
+export function getRandomTorrentCategory() {
+  return Object.values(TorrentCategory)[getRandomInt(0, Object.values(TorrentCategory).length)];
 }
 
 export function generateName(): string {

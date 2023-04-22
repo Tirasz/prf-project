@@ -1,12 +1,22 @@
 import { ObjectId, Schema, UpdateQuery, model } from 'mongoose';
 import uniqueValidator from "mongoose-unique-validator";
 
+export enum TorrentCategory {
+  MOVIE = "MOVIE",
+  SOFTWARE = "SOFTWARE",
+  XXX = "XXX",
+  EBOOK = "EBOOK"
+}
+
 export interface ITorrent extends Document {
   _id?: ObjectId,
   owner: ObjectId,
   created?: Date,
   title: string,
-  description: string
+  description: string,
+  category: TorrentCategory,
+  seeders: number,
+  leechers: number
 }
 
 
@@ -15,6 +25,9 @@ export const TorrentSchema = new Schema({
   title: { type: String, required: true, unique: true, minlength: 4, maxlength: 40 },
   description: { type: String, required: true, },
   created: { type: Date },
+  category: { type: String, required: true, enum: TorrentCategory },
+  seeders: { type: Number, required: true },
+  leechers: { type: Number, required: true }
 });
 
 

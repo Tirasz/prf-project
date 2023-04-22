@@ -1,7 +1,6 @@
 import environment from './environment';
 import apiRoutes from './routes'
 import passport from './passport-config';
-
 import express, { Request, Response } from 'express';
 import mongoose from 'mongoose';
 import session from 'express-session';

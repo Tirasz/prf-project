@@ -1,7 +1,7 @@
 import User from '../models/User';
 import Torrent from '../models/Torrent';
 import { ObjectId } from 'mongodb';
-import { generateName } from './generators';
+import { generateName, getRandomInt, getRandomTorrentCategory } from './generators';
 
 const AdminUser = new User({
   email: "admin@admin.com",
@@ -24,6 +24,9 @@ function generateTorrent(ownerId: ObjectId) {
   return new Torrent({
     owner: ownerId,
     title: generateName(),
+    seeders: getRandomInt(1, 100),
+    leechers: getRandomInt(0, 100),
+    category: getRandomTorrentCategory(),
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam lobortis ultrices orci, ac feugiat lectus aliquet sed. Integer condimentum purus vitae condimentum commodo. Nam non purus pellentesque, vehicula magna eu, mollis est. Vestibulum non vehicula erat, sit amet ornare lacus. Sed rutrum, sem ut eleifend sodales, mauris enim ullamcorper nulla, pretium rutrum ante felis vitae dui."
   });
 }
