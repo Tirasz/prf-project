@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { Controller } from './Controller';
 import Torrent from '../models/Torrent';
+import { validateObjectId } from '../utils/validators';
 
 export class TorrentController implements Controller {
 
@@ -17,7 +18,20 @@ export class TorrentController implements Controller {
   }
 
   getById(req: Request, res: Response): void {
-    throw new Error('Method not implemented.');
+    const validateResult = validateObjectId(req.params.torrentId);
+    if (!validateResult.objectId) { res.status(400).send(validateResult.err); return }
+
+    Torrent.findById(validateResult.objectId).populate('owner')
+      .then(torrent => {
+        if (!torrent) {
+          res.status(404).send('Torrent not found');
+          return;
+        }
+        res.status(200).json(torrent);
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      });
   }
 
   update(req: Request, res: Response): void {
