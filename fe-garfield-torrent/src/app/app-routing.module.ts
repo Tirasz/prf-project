@@ -21,7 +21,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/browser/browser.module').then(m => m.BrowserModule)
   },
   {
-    path: 'torrent',
+    path: 'torrent/:id',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/torrent/torrent.module').then(m => m.TorrentModule)
   },

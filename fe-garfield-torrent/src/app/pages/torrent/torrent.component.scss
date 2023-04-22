@@ -1,0 +1,86 @@
+
+* {
+  font-family: Roboto, sans-serif;
+}
+
+.container{
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+  padding: 20px 0px;
+}
+
+.left{
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.title {
+  font-size: 2em;
+  font-weight: 500;
+  padding: 0.3em;
+  color: #673ab7;
+}
+
+.info-card{
+  font-size: 1.25em;
+  padding: 0.3em;
+
+  *{
+    color: #673ab7;
+    font-weight: 500;
+    display: flex;
+    justify-content: space-between;
+    gap: 2em;
+    &::before{
+      color: black;
+      font-weight: 300;
+      display: block;
+    }
+  }
+}
+
+.description{
+  margin: 0 3.6em;
+  padding: 0 0.5em 0.5em 0.5em;
+  &::before{
+    content: 'Description ';
+    font-size: 2em;
+    font-weight: 500;
+    padding: 0.8em;
+    color: #673ab7;
+  }
+}
+
+.owner {
+  &::before{
+    content: 'Uploaded by: ';
+  }
+  
+}
+
+.uploaded {
+  &::before{
+    content: 'Uploaded on: ';
+  }
+}
+
+.category{
+  &::before{
+    content: 'Category: ';
+  }
+}
+
+.seeders{
+  &::before{
+    content: 'Seeders: ';
+  }
+}
+
+.leechers{
+  &::before{
+    content: 'Leechers: ';
+  }
+}

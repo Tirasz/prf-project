@@ -1,10 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { TorrentService } from '../../shared/services/Torrent/torrent.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Torrent } from '../../shared/models/Torrent';
+import { AuthService } from '../../shared/services/Auth/auth.service';
+import { Observable, distinctUntilChanged, map, merge, mergeMap, switchMap, zip } from 'rxjs';
 
 @Component({
   selector: 'app-torrent',
   templateUrl: './torrent.component.html',
   styleUrls: ['./torrent.component.scss']
 })
-export class TorrentComponent {
+export class TorrentComponent implements OnInit {
+
+  torrent: Observable<Torrent>;
+  isOwner: Observable<boolean>;
+
+  constructor(
+    private torrentService: TorrentService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private authService: AuthService
+  ) {
+    this.torrent = this.route.params.pipe(
+      distinctUntilChanged(),
+      switchMap(params => this.torrentService.getTorrentById(params['id']))
+    );
+
+    this.isOwner = zip(this.torrent, this.authService.currentUser).pipe(
+      map(([torrent, user]) => {
+        return torrent.owner.id! === user!.id;
+      })
+    )
+
+  }
+
+  ngOnInit(): void { }
+
+  toEdit(id: string) {
+    this.router.navigate(['/edit-torrent', id]);
+  }
 
 }

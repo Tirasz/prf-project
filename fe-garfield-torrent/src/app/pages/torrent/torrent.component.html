@@ -1,1 +1,31 @@
-<p>torrent works!</p>
+<div class="main_component">
+  <div class="div-flex" *ngIf="!(torrent | async)">
+          <mat-spinner></mat-spinner>
+  </div>
+  
+  <div class="div-flex" *ngIf="(torrent | async); let Torrent">
+    <div class="container">
+    <div class="left">
+      <mat-card class="title-card">
+        <div class="title">{{Torrent.title}}</div>
+      </mat-card>
+
+      <mat-card class="info-card">
+        <div class="owner">{{Torrent.owner.username}}</div>
+        <div class="uploaded">{{Torrent.created | date:'shortDate'}}</div>
+        <div class="category">{{Torrent.category}}</div>
+      </mat-card>
+    </div>
+
+    <mat-card class="info-card">
+      <div class="seeders">{{Torrent.seeders}}</div>
+      <div class="leechers">{{Torrent.leechers}}</div>
+    </mat-card>
+  </div>
+    <div class="container"> 
+      <mat-card class="description">
+        {{Torrent.description}}
+      </mat-card>
+    </div>
+  </div>
+</div>
