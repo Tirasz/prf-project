@@ -1,13 +1,9 @@
 import { Request, Response } from 'express';
-import User, { bootstrapUsers } from '../models/User'
+import User from '../models/User'
 import { Controller } from './Controller';
 import { validateObjectId } from '../utils/validators';
 
 export class UserController implements Controller {
-
-  constructor() {
-    bootstrapUsers();
-  }
 
   create(req: Request, res: Response) {
     const newUser = new User(req.body);

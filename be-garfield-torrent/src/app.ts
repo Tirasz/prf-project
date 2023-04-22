@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import session from 'express-session';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+import bootstrapDatabase from './utils/bootstrapper';
 
 const ANGULAR_DIST_PATH = '../fe-garfield-torrent/dist/fe-garfield-torrent/';
 const shouldServeAngular = !process.argv.includes('--noAngular');
@@ -34,7 +35,7 @@ if (shouldServeAngular) {
 }
 app.use('/api', apiRoutes);
 
-
+bootstrapDatabase();
 
 app.listen(3000, () => {
   console.log('Server is running on http://localhost:3000')
