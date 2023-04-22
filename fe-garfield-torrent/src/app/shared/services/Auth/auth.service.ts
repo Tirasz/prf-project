@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject, catchError, delay, filter, map, of, share, tap } from 'rxjs';
-import { User, UserCredentials, UserResponse, fromResponseObject } from '../../models/User';
+import { BehaviorSubject, Observable, catchError, delay, map, of, tap } from 'rxjs';
+import { User, UserCredentials, fromResponseObject } from '../../models/User';
+import { UserResponse } from '../../models/Response';
 
 const BASE_URL = '/api/auth';
 

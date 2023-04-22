@@ -7,7 +7,8 @@ import { Router } from '@angular/router';
 import { UserService } from '../../shared/services/User/user.service';
 import { AuthService } from '../../shared/services/Auth/auth.service';
 import { NotificationService } from '../../shared/services/Notification/notification.service';
-import { ResponseErrorToString, User } from '../../shared/models/User';
+import { User } from '../../shared/models/User';
+import { ResponseErrorToString } from '../../shared/models/Response';
 
 @Component({
   selector: 'app-edit-user',

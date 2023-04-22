@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, catchError, map, of, throwError } from 'rxjs';
-import { UserResponseError, User, fromErrorResponse, fromResponseObject, UserResponse } from '../../models/User';
+import { User, fromResponseObject } from '../../models/User';
+import { UserResponse, fromErrorResponse } from '../../models/Response';
 
 const BASE_URL = '/api/users';
 

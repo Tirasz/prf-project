@@ -4,9 +4,10 @@ import { FormGroup, FormControl, Validators, ValidatorFn, ValidationErrors, Abst
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, of, switchMap } from 'rxjs';
 import { UserService } from '../../shared/services/User/user.service';
-import { ResponseErrorToString, User } from '../../shared/models/User';
+import { User } from '../../shared/models/User';
 import { AuthService } from '../../shared/services/Auth/auth.service';
 import { NotificationService } from '../../shared/services/Notification/notification.service';
+import { ResponseErrorToString } from '../../shared/models/Response';
 
 export function matchValues(matchTo: string): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
