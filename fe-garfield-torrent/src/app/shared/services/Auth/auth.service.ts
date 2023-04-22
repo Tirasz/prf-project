@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, Subject, catchError, filter, map, of, share } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, catchError, delay, filter, map, of, share, tap } from 'rxjs';
 import { User, UserCredentials, UserResponse, fromResponseObject } from '../../models/User';
 
 const BASE_URL = '/api/auth';
@@ -20,8 +20,9 @@ export class AuthService {
 
   login(credentials: UserCredentials): Observable<boolean> {
     return this.http.post(BASE_URL + '/login', credentials).pipe(
+      tap(() => this.refreshCurrentUser()),
+      delay(200),
       map(() => {
-        this.refreshCurrentUser();
         return true;
       }),
       catchError(err => { console.log(err); return of(false) })
@@ -30,8 +31,9 @@ export class AuthService {
 
   logout(): Observable<boolean> {
     return this.http.post(BASE_URL + '/logout', {}).pipe(
+      tap(() => this.refreshCurrentUser()),
+      delay(200),
       map(() => {
-        this.refreshCurrentUser();
         return true;
       }),
       catchError(err => { console.log(err); return of(false) })
