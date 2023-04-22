@@ -7,7 +7,8 @@ export interface UserResponse extends User {
 }
 
 export interface TorrentResponse extends Torrent {
-  _id: string
+  _id: string,
+  owner: UserResponse
 }
 
 export interface FieldValidationError {

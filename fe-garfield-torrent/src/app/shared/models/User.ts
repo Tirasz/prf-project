@@ -9,7 +9,7 @@ export interface User {
   memberSince?: Date
 };
 
-export function fromResponseObject(respObj: UserResponse): User {
+export function fromUserResponse(respObj: UserResponse): User {
   return {
     id: respObj._id,
     email: respObj.email,

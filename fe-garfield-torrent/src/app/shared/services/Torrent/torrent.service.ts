@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
-import { Torrent, fromResponseObject } from '../../models/Torrent';
+import { Torrent, fromTorrentResponse } from '../../models/Torrent';
 import { TorrentResponse, fromErrorResponse } from '../../models/Response';
 
 const BASE_URL = '/api/torrents';
@@ -18,21 +18,21 @@ export class TorrentService {
 
   createTorrent(torrent: Torrent): Observable<Torrent> {
     return this.http.post<TorrentResponse>(BASE_URL, torrent).pipe(
-      map(torrent => fromResponseObject(torrent)),
+      map(torrent => fromTorrentResponse(torrent)),
       catchError(err => throwError(() => fromErrorResponse(err)))
     )
   }
 
   getAllTorrents(): Observable<Torrent[]> {
     return this.http.get<TorrentResponse[]>(BASE_URL).pipe(
-      map(torrents => torrents.map(torrents => fromResponseObject(torrents))),
+      map(torrents => torrents.map(torrents => fromTorrentResponse(torrents))),
       catchError(err => throwError(() => fromErrorResponse(err)))
     );
   }
 
   getTorrentById(torrentId: string): Observable<Torrent> {
     return this.http.get<TorrentResponse>(BASE_URL + '/' + torrentId).pipe(
-      map(torrent => fromResponseObject(torrent)),
+      map(torrent => fromTorrentResponse(torrent)),
       catchError(err => throwError(() => fromErrorResponse(err)))
     )
   }
@@ -40,7 +40,7 @@ export class TorrentService {
   updateTorrent(torrent: Partial<Torrent>): Observable<Torrent> {
     if (torrent.id)
       return this.http.put<TorrentResponse>(BASE_URL + '/' + torrent.id, torrent).pipe(
-        map(torrent => fromResponseObject(torrent)),
+        map(torrent => fromTorrentResponse(torrent)),
         catchError(err => throwError(() => fromErrorResponse(err)))
       );
     return throwError(() => 'Tried to update a torrent with no id!');
@@ -48,7 +48,7 @@ export class TorrentService {
 
   deleteTorrentFromId(torrentId: string): Observable<Torrent> {
     return this.http.delete<TorrentResponse>(BASE_URL + '/' + torrentId).pipe(
-      map(torrent => fromResponseObject(torrent)),
+      map(torrent => fromTorrentResponse(torrent)),
       catchError(err => throwError(() => fromErrorResponse(err)))
     )
   }

@@ -1,5 +1,5 @@
 import { TorrentResponse } from './Response';
-import { User } from './User';
+import { User, fromUserResponse } from './User';
 
 export enum TorrentCategory {
   MOVIE = "MOVIE",
@@ -20,10 +20,10 @@ export interface Torrent {
 };
 
 
-export function fromResponseObject(respObj: TorrentResponse): Torrent {
+export function fromTorrentResponse(respObj: TorrentResponse): Torrent {
   return {
     id: respObj._id,
-    owner: respObj.owner,
+    owner: fromUserResponse(respObj.owner),
     created: respObj.created,
     title: respObj.title,
     description: respObj.description,

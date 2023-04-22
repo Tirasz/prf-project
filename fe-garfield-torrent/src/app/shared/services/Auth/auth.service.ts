@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, catchError, delay, map, of, tap } from 'rxjs';
-import { User, UserCredentials, fromResponseObject } from '../../models/User';
+import { User, UserCredentials, fromUserResponse } from '../../models/User';
 import { UserResponse } from '../../models/Response';
 
 const BASE_URL = '/api/auth';
@@ -45,7 +45,7 @@ export class AuthService {
     this.http.get<UserResponse>(BASE_URL + '/status').pipe(
       map(result => {
         if (result._id)
-          return fromResponseObject(result);
+          return fromUserResponse(result);
         return null;
       }),
       catchError(err => of(null))
