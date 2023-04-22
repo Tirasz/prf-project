@@ -1,5 +1,5 @@
 import express from 'express';
-import { authGuard } from '../services/AuthGuards';
+import { authGuard, isOwnerGuard, isOwnerOrAdmin } from '../services/AuthGuards';
 import { TorrentController } from '../controllers/TorrentController';
 
 
@@ -10,8 +10,8 @@ router.get('/', torrentController.getAll);
 router.get('/:torrentId', torrentController.getById);
 
 router.post('/', authGuard, torrentController.create);
-router.put('/:torrentId', authGuard, torrentController.update); //TODO OwnerGuard
-router.delete('/:torrentId', authGuard, torrentController.delete); //TODO isAdminOrOwner
+router.put('/:torrentId', authGuard, isOwnerGuard, torrentController.update);
+router.delete('/:torrentId', authGuard, isOwnerOrAdmin, torrentController.delete);
 
 export default router;
 
