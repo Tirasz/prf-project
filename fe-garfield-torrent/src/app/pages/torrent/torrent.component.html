@@ -17,10 +17,21 @@
       </mat-card>
     </div>
 
-    <mat-card class="info-card">
-      <div class="seeders">{{Torrent.seeders}}</div>
-      <div class="leechers">{{Torrent.leechers}}</div>
-    </mat-card>
+    <div class="right">
+      <mat-card class="info-card">
+        <div class="seeders">{{Torrent.seeders}}</div>
+        <div class="leechers">{{Torrent.leechers}}</div>
+      </mat-card>
+
+      <mat-card class="info-card">
+        <mat-card-title>Actions</mat-card-title>
+        <mat-card-actions>
+          <button mat-button>EDIT</button>
+          <button mat-button class="delete-btn">DELETE</button>
+        </mat-card-actions>
+      </mat-card>
+
+    </div>
   </div>
     <div class="container"> 
       <mat-card class="description">

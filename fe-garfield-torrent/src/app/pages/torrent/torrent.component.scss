@@ -11,7 +11,7 @@
   padding: 20px 0px;
 }
 
-.left{
+.left, .right{
   display: flex;
   flex-direction: column;
   gap: 30px;
@@ -27,7 +27,7 @@
 .info-card{
   font-size: 1.25em;
   padding: 0.3em;
-
+  gap: 0.3em;
   *{
     color: #673ab7;
     font-weight: 500;
@@ -45,6 +45,7 @@
 .description{
   margin: 0 3.6em;
   padding: 0 0.5em 0.5em 0.5em;
+  font-size: 1.12em;
   &::before{
     content: 'Description ';
     font-size: 2em;
@@ -83,4 +84,12 @@
   &::before{
     content: 'Leechers: ';
   }
+}
+
+mat-card-title{
+  justify-content: center !important;
+}
+
+.delete-btn{
+  color: red !important;
 }
