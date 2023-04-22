@@ -1,1 +1,56 @@
-<p>browser works!</p>
+<div class="main_component">
+    
+  <div class="div-flex">
+      <table mat-table [dataSource]="dataSource" matSort >
+          
+
+          <ng-container matColumnDef="created">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Uploaded on</mat-header-cell>
+              <mat-cell class="date-cell" *matCellDef="let element">
+                  {{element.created | date:'shortDate'}}
+              </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="owner">
+              <mat-header-cell *matHeaderCellDef>Uploaded by</mat-header-cell>
+              <mat-cell class="username-cell" *matCellDef="let element">
+                  {{element.owner.username}}
+              </mat-cell>
+          </ng-container>    
+
+          <ng-container matColumnDef="category">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
+              <mat-cell class="category-cell" *matCellDef="let element">
+                  {{element.category}}
+              </mat-cell>
+          </ng-container> 
+
+          <ng-container matColumnDef="title">
+              <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+              <mat-cell class="name-cell" *matCellDef="let element">
+                  {{element.title}}
+              </mat-cell>
+          </ng-container> 
+
+          <ng-container matColumnDef="seeders">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Seeders</mat-header-cell>
+              <mat-cell class="seeders-cell" *matCellDef="let element">
+                  {{element.seeders}}
+              </mat-cell>
+          </ng-container> 
+
+          <ng-container matColumnDef="leechers">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Leechers</mat-header-cell>
+              <mat-cell class="leechers-cell" *matCellDef="let element">
+                  {{element.leechers}}
+              </mat-cell>
+          </ng-container> 
+          <mat-header-row *matHeaderRowDef="columnNames"></mat-header-row>
+          <!--tr mat-header-row *matHeaderRowDef="columnNames"></tr-->
+          <!--tr mat-row *matRowDef="let row; columns: columnNames;" ></tr-->
+          <mat-row *matRowDef="let row; columns: columnNames;" (click)="onRowClicked(row)"></mat-row>
+          
+      </table>
+      <mat-paginator [pageSize]="15"></mat-paginator>
+  </div>
+</div>
