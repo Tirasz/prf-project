@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
     }).pipe(first()).subscribe(result => {
       this.isLoading.next(false);
       if (result)
-        this.router.navigateByUrl('/create-torrent');
+        this.router.navigateByUrl('/browser');
       else
         this.notification.changeMessage('error', 'Incorrect user credentials!', 'Click to dismiss..')
     })
