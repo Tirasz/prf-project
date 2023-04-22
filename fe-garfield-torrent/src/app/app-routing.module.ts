@@ -26,7 +26,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/torrent/torrent.module').then(m => m.TorrentModule)
   },
   {
-    path: 'edit-torrent',
+    path: 'edit-torrent/:id',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/edit-torrent/edit-torrent.module').then(m => m.EditTorrentModule)
   },
