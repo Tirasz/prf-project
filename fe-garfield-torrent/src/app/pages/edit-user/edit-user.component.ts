@@ -101,6 +101,7 @@ export class EditUserComponent implements OnInit, OnDestroy {
       this.authService.logout();
       this.notifications.changeMessage('success', 'We will miss you, ' + deletedUser!.username, 'Click to dismiss...');
       this.router.navigate(['/browser']);
+      this.authService.refreshCurrentUser();
     })
   }
 }
