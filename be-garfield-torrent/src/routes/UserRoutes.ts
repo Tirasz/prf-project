@@ -1,6 +1,6 @@
 import express from 'express';
 import { UserController } from '../controllers/UserController';
-import { authGuard, isAdminOrSelf, isSelf } from '../services/AuthGuards';
+import { authGuard, isAdminGuard, isAdminOrSelf, isSelf } from '../services/AuthGuards';
 
 
 const userController = new UserController();
@@ -12,6 +12,7 @@ router.post('/', userController.create);
 
 router.put('/:userId', authGuard, isSelf, userController.update);
 router.delete('/:userId', authGuard, isAdminOrSelf, userController.delete);
+router.put('/promote/:userId', authGuard, isAdminGuard, userController.promote);
 
 export default router;
 

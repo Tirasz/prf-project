@@ -64,6 +64,23 @@ export class UserController implements Controller {
       });
   }
 
+  promote(req: Request, res: Response) {
+    const validateResult = validateObjectId(req.params.userId);
+    if (!validateResult.objectId) { res.status(400).send(validateResult.err); return }
+
+    User.findByIdAndUpdate(validateResult.objectId, { accessLevel: 3 })
+      .then(updatedUser => {
+        if (!updatedUser) {
+          res.status(404).send('User not found');
+          return;
+        }
+        res.status(200).json(updatedUser);
+      })
+      .catch(err => {
+        res.status(500).send(err);
+      });
+  }
+
   delete(req: Request, res: Response) {
     const validateResult = validateObjectId(req.params.userId);
     if (!validateResult.objectId) { res.status(400).send(validateResult.err); return }
