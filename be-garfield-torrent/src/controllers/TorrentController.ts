@@ -3,10 +3,24 @@ import { Controller } from './Controller';
 import Torrent from '../models/Torrent';
 import { validateObjectId } from '../utils/validators';
 
+
 export class TorrentController implements Controller {
 
   create(req: Request, res: Response): void {
-    throw new Error('Method not implemented.');
+    // authGuard makes sure that the request is authenticated
+    const newTorrent = new Torrent({
+      ...req.body,
+      owner: req.user!.id!
+    });
+
+    newTorrent.save()
+      .then(torrent => res.status(200).json(torrent.populate('owner')))
+      .catch(err => {
+        if (err.name == "ValidationError")
+          res.status(400).send(err);
+        else
+          res.status(500).send(err);
+      })
   }
 
   getAll(req: Request, res: Response): void {
