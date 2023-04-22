@@ -1,0 +1,8 @@
+mat-row:hover {
+  cursor: pointer;
+  background-color: #673ab7 !important;
+  text-decoration: underline !important;
+  mat-cell{
+      color: white !important
+  }
+}

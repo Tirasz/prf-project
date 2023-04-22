@@ -13,7 +13,7 @@ import { User } from '../../shared/models/User';
 })
 export class UserBrowserComponent implements AfterViewInit {
 
-  columnNames: string[] = ['memberSince', 'username', 'email', 'accessLevel']
+  columnNames: string[] = ['username', 'email', 'memberSince', 'accessLevel']
   dataSource = new MatTableDataSource<User>();
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;

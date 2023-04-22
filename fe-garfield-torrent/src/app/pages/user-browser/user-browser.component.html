@@ -1,1 +1,42 @@
-<p>user-browser works!</p>
+<div class="main_component">
+    
+  <div class="div-flex">
+      <table mat-table [dataSource]="dataSource" matSort >
+          
+
+          <ng-container matColumnDef="username">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Username</mat-header-cell>
+              <mat-cell class="username-cell" *matCellDef="let element">
+                  {{element.username}}
+              </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>E-mail</mat-header-cell>
+              <mat-cell class="email-cell" *matCellDef="let element">
+                  {{element.email}}
+              </mat-cell>
+          </ng-container>    
+
+          <ng-container matColumnDef="memberSince">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Member since</mat-header-cell>
+              <mat-cell class="member-since-cell" *matCellDef="let element">
+                  {{element.memberSince | date:'shortDate'}}
+              </mat-cell>
+          </ng-container> 
+
+          <ng-container matColumnDef="accessLevel">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Access</mat-header-cell>
+              <mat-cell class="name-cell" *matCellDef="let element">
+                  {{(element.accessLevel == 3)? 'Admin' : 'User'}}
+              </mat-cell>
+          </ng-container> 
+          <mat-header-row *matHeaderRowDef="columnNames"></mat-header-row>
+          <!--tr mat-header-row *matHeaderRowDef="columnNames"></tr-->
+          <!--tr mat-row *matRowDef="let row; columns: columnNames;" ></tr-->
+          <mat-row *matRowDef="let row; columns: columnNames;" (click)="onRowClicked(row)"></mat-row>
+          
+      </table>
+      <mat-paginator [pageSize]="15"></mat-paginator>
+  </div>
+</div>
