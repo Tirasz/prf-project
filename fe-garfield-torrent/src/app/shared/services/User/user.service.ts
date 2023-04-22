@@ -59,7 +59,7 @@ export class UserService {
 
   promoteUser(user: User, accessLevel: number): Observable<User> {
     if (user.id)
-      return this.http.put<UserResponse>(BASE_URL + '/' + user.id, { accessLevel }).pipe(
+      return this.http.put<UserResponse>(BASE_URL + '/promote/' + user.id, { accessLevel }).pipe(
         map(user => fromUserResponse(user)),
         catchError(err => throwError(() => fromErrorResponse(err)))
       );

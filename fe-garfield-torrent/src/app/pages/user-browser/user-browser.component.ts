@@ -5,8 +5,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { UserService } from '../../shared/services/User/user.service';
 import { User } from '../../shared/models/User';
-import { catchError, filter, first, of, switchMap, tap } from 'rxjs';
+import { Observable, catchError, filter, first, of, switchMap, tap } from 'rxjs';
 import { NotificationService } from '../../shared/services/Notification/notification.service';
+import { AuthService } from '../../shared/services/Auth/auth.service';
 
 @Component({
   selector: 'app-user-browser',
@@ -17,15 +18,18 @@ export class UserBrowserComponent implements AfterViewInit {
 
   columnNames: string[] = ['username', 'email', 'memberSince', 'accessLevel', 'actions']
   dataSource = new MatTableDataSource<User>();
+  currentUser: Observable<User | null>;
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(
     private userService: UserService,
-    private router: Router,
-    private notifications: NotificationService
-  ) { }
+    private authService: AuthService,
+    private notifications: NotificationService,
+  ) {
+    this.currentUser = this.authService.currentUser.asObservable();
+  }
 
   ngAfterViewInit(): void {
     this.userService.getAllUsers().subscribe(users => {
@@ -41,6 +45,7 @@ export class UserBrowserComponent implements AfterViewInit {
     this.userService.deleteUser(user).pipe(
       filter(user => Boolean(user)),
       switchMap(result => {
+        this.authService.refreshCurrentUser();
         return this.userService.getAllUsers();
       }),
       first(),
