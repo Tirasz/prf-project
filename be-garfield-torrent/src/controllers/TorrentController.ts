@@ -14,7 +14,7 @@ export class TorrentController implements Controller {
     });
 
     newTorrent.save()
-      .then(torrent => res.status(200).json(torrent.populate('owner')))
+      .then(torrent => res.status(200).json(torrent))
       .catch(err => {
         if (err.name == "ValidationError")
           res.status(400).send(err);
