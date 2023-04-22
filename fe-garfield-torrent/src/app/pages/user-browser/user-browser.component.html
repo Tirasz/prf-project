@@ -36,7 +36,7 @@
             <mat-header-cell *matHeaderCellDef mat-sort-header>Actions</mat-header-cell>
             <mat-cell class="name-cell" *matCellDef="let element">
                 <div class="actions-container">
-                  <button class="action" [disabled]="element.accessLevel == 3" mat-raised-button color="primary" (click)="promoteUser(element)">Promote</button>
+                  <button class="action" mat-raised-button color="{{(element.accessLevel == 3)? 'accent' : 'primary'}}" (click)="promoteUser(element)">{{(element.accessLevel == 3)? 'Demote' : 'Promote'}}</button>
                   <button class="action" mat-raised-button color="warn" (click)="deleteUser(element)">Delete</button>
                 </div>
             </mat-cell>

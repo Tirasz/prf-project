@@ -66,9 +66,13 @@ export class UserController implements Controller {
 
   promote(req: Request, res: Response) {
     const validateResult = validateObjectId(req.params.userId);
-    if (!validateResult.objectId) { res.status(400).send(validateResult.err); return }
+    if (!validateResult.objectId || !req.body.accessLevel) {
+      return res.status(400).send(validateResult.err);
+    }
 
-    User.findByIdAndUpdate(validateResult.objectId, { accessLevel: 3 })
+    const accessLevel: number = req.body.accessLevel;
+
+    User.findByIdAndUpdate(validateResult.objectId, { accessLevel })
       .then(updatedUser => {
         if (!updatedUser) {
           res.status(404).send('User not found');

@@ -21,7 +21,7 @@ export class IsAdminGuard implements CanActivate {
       map(user => user?.accessLevel === 3),
       tap(result => {
         if (!result) {
-          this.notification.changeMessage('warning', 'Only torrent owners can edit torrents!', 'Click to dismiss...')
+          this.notification.changeMessage('warning', 'Only admins can manage users!', 'Click to dismiss...')
           this.router.navigate(['/browser']);
         }
       })

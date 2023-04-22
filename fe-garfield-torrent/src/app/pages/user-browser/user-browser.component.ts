@@ -58,7 +58,8 @@ export class UserBrowserComponent implements AfterViewInit {
   }
 
   promoteUser(user: User) {
-    this.userService.promoteUser(user).pipe(
+    const accessLevel = (user.accessLevel == 3) ? 1 : 3;
+    this.userService.promoteUser(user, accessLevel).pipe(
       filter(user => Boolean(user)),
       switchMap(result => {
         return this.userService.getAllUsers();

@@ -57,9 +57,9 @@ export class UserService {
     return throwError(() => 'Tried to delete a user with no id!');
   }
 
-  promoteUser(user: User): Observable<User> {
+  promoteUser(user: User, accessLevel: number): Observable<User> {
     if (user.id)
-      return this.http.put<UserResponse>(BASE_URL + '/' + user.id, {}).pipe(
+      return this.http.put<UserResponse>(BASE_URL + '/' + user.id, { accessLevel }).pipe(
         map(user => fromUserResponse(user)),
         catchError(err => throwError(() => fromErrorResponse(err)))
       );
