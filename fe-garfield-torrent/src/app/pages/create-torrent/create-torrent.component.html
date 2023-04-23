@@ -4,7 +4,7 @@
   </div>
   
   <div class="div-flex" *ngIf="!(isLoading | async)">
-      <h1>Edit your torrent!</h1>
+      <h1>Create your torrent!</h1>
       <form [formGroup]="editTorrentForm" (ngSubmit)="createTorrent()">
           <mat-form-field>
               <mat-label for="title">Torrent title: </mat-label>
