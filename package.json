@@ -4,14 +4,17 @@
   "description": "",
   "main": "be-garfield-torrent/src/app.ts",
   "scripts": {
-    "test": "npm run build && npm run serve",
+    "setup-be": "cd be-garfield-torrent && npm install",
+    "setup-fe": "cd fe-garfield-torrent && npm install",
+    "setup": "npm install & npm run setup-be && npm run setup-fe",
     "build-be": "cd be-garfield-torrent && npm run build",
     "build-fe": "cd fe-garfield-torrent && ng build",
     "build": "npm run build-be && npm run build-fe",
     "serve": "cd be-garfield-torrent && npm run serve",
     "dev-be": "cd be-garfield-torrent && npm run dev",
     "dev-fe": "cd fe-garfield-torrent && ng s",
-    "dev": "npm-run-all --parallel dev-be dev-fe"
+    "dev": "npm-run-all --parallel dev-be dev-fe",
+    "start": "npm run build && npm run serve"
   },
   "repository": {
     "type": "git",
